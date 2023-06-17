@@ -12,11 +12,11 @@ class AuthController extends Controller
     public function __invoke(Request $request): Response
     {
         $data = $request->validate([
-            'email' => '',
+            'inn' => '',
             'password' => ''
         ]);
 
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('inn', $data['inn'])->first();
         return response($user);
 
     }

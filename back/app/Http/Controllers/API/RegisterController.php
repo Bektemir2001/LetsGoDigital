@@ -15,12 +15,14 @@ class RegisterController extends Controller
             $data = $request->validate([
                 'name' => '',
                 'email' => '',
+                'inn' => '',
                 'password' => ''
             ]);
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => $data['password']
+                'password' => $data['password'],
+                'inn' => $data['inn'],
             ]);
             $user = User::where('id', $user->id)->get();
             return response($user);

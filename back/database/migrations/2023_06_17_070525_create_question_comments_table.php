@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poll_votes', function (Blueprint $table) {
+        Schema::create('question_comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('poll_id');
-            $table->integer('vote_value');
+            $table->unsignedBigInteger('question_id');
+            $table->text('comment');
             $table->timestamps();
 
-            $table->index('user_id', 'poll_vote_user_idx');
-            $table->index('poll_id', 'poll_vote_poll_idx');
+            $table->index('user_id', 'question_comment_user_idx');
+            $table->index('question_id', 'question_comment_question_idx');
 
-            $table->foreign('user_id', 'poll_vote_user_fk')
+            $table->foreign('user_id', 'question_comment_user_fk')
                 ->on('users')
                 ->references('id');
-            $table->foreign('poll_id', 'poll_vote_poll_fk')
-                ->on('polls')
+            $table->foreign('question_id', 'question_comment_question_fk')
+                ->on('questions')
                 ->references('id');
         });
     }
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poll_votes');
+        Schema::dropIfExists('question_comments');
     }
 };
