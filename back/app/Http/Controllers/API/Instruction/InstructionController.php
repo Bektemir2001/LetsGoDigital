@@ -38,10 +38,10 @@ class InstructionController
         return response(['data' => $instructions]);
     }
 
-    public function document()
+    public function document($instruction)
     {
-        $document = DB::table('instructions')->select('instruction')
-            ->where('id', 10)
+        $document = DB::table('instructions')->select('title','instruction')
+            ->where('id', $instruction)
             ->get();
         $document = $document[0];
         return view('instruction', compact('document'));

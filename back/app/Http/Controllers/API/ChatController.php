@@ -24,8 +24,9 @@ class ChatController
             $data = $response->json();
             // Process the response data
         }
-//        return response(['data' => $data]);
-        $instructions = $data;
+        return response(['data' => $data]);
+        $instructions = $data['instructions'];
+        $answer = $data['answer'];
         $categories = [];
         for($i = 0; $i < count($instructions); $i++)
         {
@@ -47,6 +48,6 @@ class ChatController
             ->orderByDesc('total_likes')
             ->limit(4)
             ->get();
-        return response(['data' => ['instructions' => $data, 'popular_questions' => $popularQuestions]]);
+        return response(['data' => ['answer' => $answer,'instructions' => $instructions, 'popular_questions' => $popularQuestions]]);
     }
 }

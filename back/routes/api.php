@@ -41,7 +41,7 @@ Route::group(['prefix' => 'instruction'], function (){
     Route::get('/get/{instruction}', [InstructionController::class, 'get']);
     Route::get('/get/by/category/{category}', [InstructionController::class, 'getByCategory']);
     Route::post('/search', [InstructionController::class, 'search']);
-    Route::get('/document', [InstructionController::class, 'document']);
+    Route::get('/document/{instruction}', [InstructionController::class, 'document']);
 });
 
 Route::group(['prefix' => 'question'], function (){
