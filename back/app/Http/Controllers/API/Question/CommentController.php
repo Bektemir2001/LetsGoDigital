@@ -27,8 +27,11 @@ class CommentController
 
     public function getByQuestion(Question $question)
     {
-        $comments = DB::table('question_comments')
-            ->where('question_id', $question->id)
+        $comments = DB::table('question_comments as q')
+            ->join('users as u', 'u.id', '=', 'q.user_id')
+            ->select('q.id as id','u.id as user_id', 'u.name',
+                'u.phone_number', 'q.comment', 'q.question_id', 'q.created_at', 'q.updated_at')
+            ->where('q.question_id', $question->id)
             ->get();
         return response(['data' => $comments]);
     }

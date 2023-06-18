@@ -4,6 +4,8 @@ use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\ChatController;
 use App\Http\Controllers\API\Instruction\InstructionController;
 use App\Http\Controllers\API\Lawyer\LawyerController;
+use App\Http\Controllers\API\PetitionController;
+use App\Http\Controllers\API\PetitionLikeController;
 use App\Http\Controllers\API\Question\CommentController;
 use App\Http\Controllers\API\Question\LikeController;
 use App\Http\Controllers\API\Question\QuestionController;
@@ -71,8 +73,19 @@ Route::group(['prefix' => 'lawyer'], function (){
 
 Route::group(['prefix' => 'chat'], function (){
     Route::post('/query', [ChatController::class, 'query']);
+    Route::post('/query/test', [ChatController::class, 'test']);
 });
 
 Route::get('/get/user/{user}', [UserController::class, 'get']);
+
+Route::group(['prefix' => 'petition'], function (){
+    Route::post('/create', [PetitionController::class, 'store']);
+    Route::get('/get/all/petitions', [PetitionController::class, 'getAll']);
+    Route::get('/get/{petition}', [PetitionController::class, 'get']);
+    Route::group(['prefix' => 'like'], function (){
+        Route::post('/create', [PetitionLikeController::class, 'store']);
+        Route::get('/get/by/petition/{petition}/{user}', [PetitionLikeController::class, 'getByPetition']);
+    });
+});
 
 

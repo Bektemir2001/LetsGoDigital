@@ -12,6 +12,7 @@ class ChatController
     public function query(Request $request)
     {
         $query = $request->input('query');
+//        print($query);
         $instructions = DB::table('instructions')
             ->select('id', 'title')->get();
 //        return response(['data' => $query, 'instruction' => $instructions]);
@@ -24,8 +25,8 @@ class ChatController
             $data = $response->json();
             // Process the response data
         }
-        return response(['data' => $data]);
-        $instructions = $data['instructions'];
+//        return response(['data' => $data]);
+        $instructions = $data['instructions'] !== null ? $data['instructions'] : [];
         $answer = $data['answer'];
         $categories = [];
         for($i = 0; $i < count($instructions); $i++)
@@ -49,5 +50,40 @@ class ChatController
             ->limit(4)
             ->get();
         return response(['data' => ['answer' => $answer,'instructions' => $instructions, 'popular_questions' => $popularQuestions]]);
+    }
+
+    public function test(){
+        return response(json_decode('{
+    "data": {
+        "answer": "\n\nДля получения медицинского страхования Вам необходимо обратиться в любое страховое агентство или компанию, предоставляющую услуги по медицинскому страхованию. Вы также можете посетить веб-сайт любой из таких компаний и получить подробную информацию о предоставляемых программах медицинского страхования. Вы также можете позвонить в компанию и получить подробную информацию о предоставляемых программах медицинского страхования.",
+        "instructions": [
+            {
+                "id": 30,
+                "title": "Как получить Полис ОМС"
+            },
+            {
+                "id": 26,
+                "title": "Бесплатные медицинские услуги по Программе госсгарантий"
+            },
+            {
+                "id": 56,
+                "title": "Должностная инструкция специалиста первой категории по земельным, жилищным вопросам и муниципальной собственности"
+            },
+            {
+                "id": 58,
+                "title": "Должностная инструкция ведущего специалиста айыл окмоту по социальной защите"
+            },
+            {
+                "id": 59,
+                "title": "Кто может получать социальное пособие и как оформить пособие?"
+            },
+            {
+                "id": 61,
+                "title": "Пособие по беременности и родам"
+            }
+        ],
+        "popular_questions": []
+    }
+}'));
     }
 }
